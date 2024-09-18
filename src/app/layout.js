@@ -1,6 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
+import { ClerkProvider,ClerkLoaded,ClerkLoading } from "@clerk/nextjs";
+import Loader from "./components/loader";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,15 +22,27 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+   <ClerkProvider>
     <html lang="en">
-      <body
-        className={`${geistSans.variable}
+      <body className={`${geistSans.variable}
         hea ${geistMono.variable} antialiased`}
       >
-        
-        <Header/>
+          
+   
+     <ClerkLoading>
+              {/*we  can add any custom loading spinner or animation here */}
+           
+              <Loader/>
+
+          </ClerkLoading>
+
+
+           <ClerkLoaded>
+        <Header/> 
         {children}
+        </ClerkLoaded>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
